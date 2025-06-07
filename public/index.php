@@ -10,6 +10,8 @@ define('VIEWS_PATH', $root . 'views' . DIRECTORY_SEPARATOR);
 
 /* YOUR CODE (Instructions in README.md) */
 include(APP_PATH . 'App.php');
+$all_data = read_all_csv();
+$summary = calculate_income_expenses_net($all_data);
 include(VIEWS_PATH . 'transactions.php');
 
 

@@ -34,21 +34,21 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- YOUR CODE -->
-                 
+
+                 <?php table_body_population($all_data) ?>
             </tbody>
             <tfoot>
                 <tr>
                     <th colspan="3">Total Income:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td><?php echo $summary["total_income"] ?> </td>
                 </tr>
                 <tr>
                     <th colspan="3">Total Expense:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td><?php echo $summary["total_expenses"] ?></td>
                 </tr>
                 <tr>
                     <th colspan="3">Net Total:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td><?php echo $summary["net_total"] ?></td>
                 </tr>
             </tfoot>
         </table>

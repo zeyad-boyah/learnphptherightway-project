@@ -49,9 +49,12 @@ function read_all_csv(): array
     return $all_data;
 }
 
-
-$all_data = read_all_csv();
-
+// helper function for formatting to be used in the summary portion 
+function format_currency($amount): string {
+    $sign = ($amount < 0) ? '-' : '';
+    $abs_amount = abs($amount);
+    return $sign . '$' . number_format($abs_amount, 2);
+}
 
 function calculate_income_expenses_net($all_data): array{
     $total_income = 0;
@@ -72,11 +75,34 @@ function calculate_income_expenses_net($all_data): array{
 
         }
     }
-    $summary = ["total_income" => $total_income, "total_expenses" => $total_expenses, "net_total" => $net_total];
+    // Format values with dollar sign and comma separators
+    $summary = [
+        "total_income" => format_currency($total_income),
+        "total_expenses" => format_currency($total_expenses),
+        "net_total" => format_currency($net_total),
+    ];
     // echo "<pre>";
     // print_r($summary);
     // echo "</pre>";
     return $summary;
 }
 
-$summary = calculate_income_expenses_net($all_data);
+function table_body_population($all_data){
+    foreach ($all_data as $file_entry){
+        foreach($file_entry['rows'] as $transaction){
+            echo "<tr>";
+            // Parse the date string safely
+            $date = strtotime($transaction["Date"]);
+            echo "<td>" . date("M d, Y", $date) . "</td>";
+
+            echo "<td>" .  $transaction["Check #"] . "</td>";
+            echo "<td>" . $transaction["Description"] . "</td>";
+
+             // Color coding for Amount
+            $color = ($transaction['Amount'][0] === '-') ? 'red' : 'green';
+            echo "<td style='color: $color;'>" . $transaction["Amount"] . "</td>";
+
+            echo "</tr>";
+        }
+    }
+}
